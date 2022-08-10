@@ -1,3 +1,5 @@
+from distutils.log import ERROR, error
+from ensurepip import version
 import imp
 from multiprocessing.connection import wait
 import sys
@@ -9,9 +11,14 @@ import requests
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
+from PIL import ImageFilter
 import os
 from time import *
 from bs4 import BeautifulSoup
+import qrcode
+from qrcode.image.styledpil import StyledPilImage
+from qrcode.image.styles.moduledrawers import RoundedModuleDrawer
+from qrcode.image.styles.colormasks import RadialGradiantColorMask
 
 
 #####Globals
@@ -43,7 +50,7 @@ def resource_path(relative_path):
 
 
 
-def generateImage(sign = Sign()):
+def generateImage(sign = Sign(), link = float):
     yAdustment = 700
     #Price location values
     priceX = 200
@@ -154,6 +161,20 @@ def generateImage(sign = Sign()):
                 fill=(0,0,0),
                 anchor="mm"
                 )
+
+
+
+
+    #Add the QR 
+    qr = qrcode.QRCode(error_correction=qrcode.constants.ERROR_CORRECT_H,border=0)
+    qr.add_data(link)
+    #embeded_image_path=resource_path('data/QR_img.png')
+    img_2 = qr.make_image(image_factory=StyledPilImage, version = 20, error_correction=qrcode.constants.ERROR_CORRECT_H, embeded_image_path=resource_path('data/QR_img.png'))
+    #img_2 = qrcode.make(link)
+    img_2 = img_2.resize((175,175),Image.ANTIALIAS )
+    img_2.save("C:/Users/"+username+"/gen_sign/QR.png")
+    img2 = Image.open("C:/Users/"+username+"/gen_sign/QR.png")
+    img.paste(img2, (113,68),)
 
 
 
@@ -288,8 +309,6 @@ def generateImage(sign = Sign()):
 
 
 
-
-
 def generateImageData(link, tickbox,sign_number, custom_price, another_sign):
     sign = Sign()
 
@@ -332,7 +351,7 @@ def generateImageData(link, tickbox,sign_number, custom_price, another_sign):
     if(custom_price != ""):
         sign.price = "\u20AC" + str(custom_price)
 
-    generateImage(sign)
+    generateImage(sign, link)
 
 
 
