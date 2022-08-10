@@ -200,8 +200,12 @@ def generateImage(sign = Sign()):
             add_third_name = 1
 
     #Adjust Font for name length
-    if(len(name)>48):
+    if(len(sign.name)>48):
         name_font_size = 28
+        nameYadjustments = 0
+    
+    if(len(sign.name)>60):
+        name_font_size = 25
         nameYadjustments = 0
 
     #Adding Line 1
@@ -261,10 +265,6 @@ def generateImage(sign = Sign()):
             else:
                 file_name = "/Sign_"+dt+".png"
                 img.save(filelocation+file_name)
-
-
-
-
 
     #Adding Sold as Seen
     if(sign.sold_as_seen == 1):

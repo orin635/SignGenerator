@@ -1,0 +1,8 @@
+('./data',
+ 'data',
+ [],
+ 'DATA',
+ [('data\\blank_sign.png', './data\\blank_sign.png', 'DATA'),
+  ('data\\Lato-Black.ttf', './data\\Lato-Black.ttf', 'DATA'),
+  ('data\\Lato-Regular.ttf', './data\\Lato-Regular.ttf', 'DATA'),
+  ('data\\signGenerator.ico', './data\\signGenerator.ico', 'DATA')])
